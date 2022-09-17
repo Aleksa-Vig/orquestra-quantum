@@ -1,5 +1,4 @@
-from cgi import test
-from cirq import measurement_key
+
 from orquestra.quantum.circuits import CNOT, H, Circuit, X, Z
 from icecream import ic
 from orquestra.quantum.symbolic_simulator import SymbolicSimulator
@@ -40,7 +39,7 @@ ic(wavefunction.amplitudes)
 
 
 sym_simulator = SymbolicSimulator()
-tester=PauliSandwichBackend(bell_circuit.operations[0],bell_circuit.operations,sym_simulator)
+tester=PauliSandwichBackend(bell_circuit.operations[0].gate,bell_circuit.operations,sym_simulator)
 measurements = tester.run_circuit_and_measure(bell_circuit,num_samples)
 ic(measurements.get_counts())
 
