@@ -1,4 +1,5 @@
 
+from orquestra.quantum.circuits._gates import GateOperation
 from orquestra.quantum.circuits import CNOT, H, Circuit, X, Z
 from icecream import ic
 from orquestra.quantum.symbolic_simulator import SymbolicSimulator
@@ -20,7 +21,7 @@ bell_circuit += CNOT(0, 1)
 
 
 sym_simulator = SymbolicSimulator()
-num_samples = 10
+num_samples = 1000
 measurements2 = sym_simulator.run_circuit_and_measure(bell_circuit, num_samples)
 ic(measurements2.get_counts())
 
@@ -39,7 +40,7 @@ ic(wavefunction.amplitudes)
 
 
 sym_simulator = SymbolicSimulator()
-tester=PauliSandwichBackend(bell_circuit.operations[0].gate,bell_circuit.operations,sym_simulator)
+tester=PauliSandwichBackend(GateOperation(bell_circuit.operations[0].gate, 1),bell_circuit.operations,sym_simulator)
 measurements = tester.run_circuit_and_measure(bell_circuit,num_samples)
 ic(measurements.get_counts())
 
