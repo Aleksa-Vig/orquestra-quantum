@@ -32,11 +32,18 @@ from orquestra.integrations.cirq.conversions._circuit_conversions import export_
 bell_circuit_X = import_from_qiskit(qiskit_circuit)
 cirq_circuit = export_to_cirq(bell_circuit_X)
 print(cirq_circuit)
-ic(bell_circuit)
+
+sv_simulator = QiskitSimulator("aer_simulator_statevector")
+wavefunction = sv_simulator.get_wavefunction(bell_circuit_X)
+ic(wavefunction.amplitudes)
+
+
+
 sym_simulator = SymbolicSimulator()
-tester=PauliSandwichBackend(bell_circuit.operations[1],'CNOT',sym_simulator)
+tester=PauliSandwichBackend(bell_circuit.operations[0],bell_circuit.operations,sym_simulator)
 measurements = tester.run_circuit_and_measure(bell_circuit,num_samples)
 ic(measurements.get_counts())
+
 
 qiskit_circuit = export_to_qiskit(bell_circuit)
 qiskit_circuit.x(1)
@@ -45,6 +52,9 @@ from orquestra.integrations.cirq.conversions._circuit_conversions import export_
 bell_circuit_X = import_from_qiskit(qiskit_circuit)
 cirq_circuit = export_to_cirq(bell_circuit_X)
 print(cirq_circuit)
+sv_simulator = QiskitSimulator("aer_simulator_statevector")
+wavefunction = sv_simulator.get_wavefunction(bell_circuit_X)
+ic(wavefunction.amplitudes)
 
 
 
